@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { getPostById } from "../../services/postService";
-import { _postAction } from "../../actions";
+import { _postAction } from "../../redux/actions";
 
 const Post = ({ post }: any) => {
   const dispatch = useDispatch();

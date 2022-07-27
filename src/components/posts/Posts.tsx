@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getPosts } from "../../services/postService";
-import { postsAction } from "../../actions";
+import { postsAction } from "../../redux/actions";
 
 const Posts = (props: any) => {
   return (

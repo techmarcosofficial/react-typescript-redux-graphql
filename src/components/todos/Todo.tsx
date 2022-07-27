@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { getTodoById } from "../../services/todoService";
-import { _todoAction } from "../../actions";
+import { _todoAction } from "../../redux/actions";
 
 const Todo = ({ todo }: any) => {
   const dispatch = useDispatch();

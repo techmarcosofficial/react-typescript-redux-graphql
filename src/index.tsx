@@ -11,9 +11,9 @@ import {
   InMemoryCache,
   ApolloProvider
 } from '@apollo/client';
-import './index.css';
+import './assets/styles/index.css';
 import reportWebVitals from './reportWebVitals';
-import { store } from './store';
+import { store } from './redux/store';
 
 // pages
 import Home from './pages/Home/Home';

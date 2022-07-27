@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getTodos } from "../../services/todoService";
-import { todosAction } from "../../actions";
+import { todosAction } from "../../redux/actions";
 
 const Todos = ({ todos }: any) => {
   return (
