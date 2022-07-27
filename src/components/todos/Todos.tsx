@@ -2,17 +2,25 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import Header from "../../components/layout/Header/Header";
 import { getTodos } from "../../services/todoService";
 import { todosAction } from "../../redux/actions";
 
 const Todos = ({ todos }: any) => {
   return (
     <>
-      <h4>Todos List</h4>
-      <ul>
-        {todos && todos.map((todo: any) => <li key={todo.id}>
-          <Link to={`/todos/${todo.id}`}>{todo.title}</Link></li>)}
-      </ul>
+      <Header />
+      <div className="bg-indigo-100 py-6 md:py-12">
+        <div className="container px-4 mx-auto">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-medium mb-2">Todos List</h2>
+            <ul>
+              {todos && todos.map((todo: any) => <li key={todo.id}>
+                <Link to={`/todos/${todo.id}`}>{todo.title}</Link></li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
