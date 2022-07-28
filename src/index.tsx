@@ -27,12 +27,10 @@ import Todos from './pages/Todos';
 import Todo from './pages/Todos/Todo';
 import Posts from './pages/Posts';
 import Post from './pages/Posts/Post';
-import Locations from './pages/Locations';
-import Location from './pages/Locations/Location';
 
-const client = new ApolloClient({
-  uri: 'https://flyby-gateway.herokuapp.com/', // specifies the URL of our GraphQL server.
-  cache: new InMemoryCache(),                  // Apollo Client uses to cache query results after fetching them.
+const client = new ApolloClient({ // 'https://flyby-gateway.herokuapp.com/',
+  uri: 'http://localhost:4000/',  // specifies the URL of our GraphQL server.
+  cache: new InMemoryCache(),     // Apollo Client uses to cache query results after fetching them.
   // connectToDevTools: true
 });
 
@@ -56,8 +54,6 @@ root.render(
             <Route path="/todos/:id" element={<Todo />} />
             <Route path="/posts" element={<Posts />} />
             <Route path="/posts/:id" element={<Post />} />
-            <Route path="/locations" element={<Locations />} />
-            <Route path="/locations/:id" element={<Location />} />
           </Routes>
         </BrowserRouter>
       </ApolloProvider>

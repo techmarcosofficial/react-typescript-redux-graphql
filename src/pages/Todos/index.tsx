@@ -3,10 +3,15 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Header from "../../components/layout/Header/Header";
-import { getTodos } from "../../services/todoService";
-import { todosAction } from "../../redux/actions";
+// import { getTodos } from "../../services/todoService";
+// import { todosAction } from "../../redux/actions";
+import { useQuery } from "@apollo/client";
+import { GET_TODOS } from "../../graphql/query";
 
 const Todos = ({ todos }: any) => {
+  const { loading, error, data } = useQuery(GET_TODOS);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
   return (
     <>
       <Header />
@@ -15,7 +20,7 @@ const Todos = ({ todos }: any) => {
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-medium mb-2">Todos List</h2>
             <ul>
-              {todos && todos.map((todo: any) => <li key={todo.id}>
+              {data.todos && data.todos.map((todo: any) => <li key={todo.id}>
                 <Link to={`/todos/${todo.id}`}>{todo.title}</Link></li>)}
             </ul>
           </div>
@@ -37,7 +42,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => {
-  getTodos().then((response) => dispatch(todosAction(response))).catch((error) => error);
+  // getTodos().then((response) => dispatch(todosAction(response))).catch((error) => error);
   return {};
 };
 

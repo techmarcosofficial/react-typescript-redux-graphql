@@ -1,22 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import Header from "../../components/layout/Header/Header";
-import { getPostById } from "../../services/postService";
-import { _postAction } from "../../redux/actions";
+// import { getPostById } from "../../services/postService";
+// import { _postAction } from "../../redux/actions";
+import { useQuery } from "@apollo/client";
+import { GET_POST } from "../../graphql/query";
 
 const Post = ({ post }: any) => {
-  const dispatch = useDispatch();
   const { id } = useParams();
-
-  useEffect(() => {
-    if (id) {
-      getPostById(parseInt(id)).then(
-        (response) => dispatch(_postAction(response))).catch((error) => error);
-    }
-  }, []);
-  
+  const { loading, error, data } = useQuery(GET_POST, {
+    variables: { id }
+  });
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+  // useEffect(() => {
+  //   if (id) {
+  //     getPostById(parseInt(id)).then(
+  //       (response) => dispatch(_postAction(response))).catch((error) => error);
+  //   }
+  // }, []);
   return (
     <>
       <Header />
@@ -24,9 +28,9 @@ const Post = ({ post }: any) => {
         <div className="container px-4 mx-auto">
           <div className="text-center max-w-2xl mx-auto">
             <div className="row">
-              <p>ID : {post && post.id}</p>
-              <p>Title: {post && post.title}</p>
-              <p>Body: {post && post.body}</p>
+              <p>ID : {data.post && data.post.id}</p>
+              <p>Title: {data.post && data.post.title}</p>
+              <p>Body: {data.post && data.post.body}</p>
             </div>
           </div>
         </div>

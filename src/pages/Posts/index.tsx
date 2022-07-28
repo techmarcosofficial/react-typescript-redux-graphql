@@ -3,10 +3,15 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Header from "../../components/layout/Header/Header";
-import { getPosts } from "../../services/postService";
-import { postsAction } from "../../redux/actions";
+// import { getPosts } from "../../services/postService";
+// import { postsAction } from "../../redux/actions";
+import { useQuery } from "@apollo/client";
+import { GET_POSTS } from "../../graphql/query";
 
 const Posts = (props: any) => {
+  const { loading, error, data } = useQuery(GET_POSTS);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
   return (
     <>
       <Header />
@@ -15,8 +20,8 @@ const Posts = (props: any) => {
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-medium mb-2">Posts List</h2>
               <ul>
-                {props.posts &&
-                  props.posts.map(
+                {data.posts &&
+                  data.posts.map(
                     (post: any) => <li key={post.id}>
                       <Link to={`/posts/${post.id}`}>{post.title}</Link></li>)
                 }
@@ -40,9 +45,9 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => {
-  getPosts().then((response) => {
-    dispatch(postsAction(response));
-  }).catch((error) => error);
+  // getPosts().then((response) => {
+  //   dispatch(postsAction(response));
+  // }).catch((error) => error);
   return {};
 };
 

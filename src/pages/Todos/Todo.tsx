@@ -1,22 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import Header from "../../components/layout/Header/Header";
-import { getTodoById } from "../../services/todoService";
-import { _todoAction } from "../../redux/actions";
+// import { getTodoById } from "../../services/todoService";
+// import { _todoAction } from "../../redux/actions";
+import { useQuery } from "@apollo/client";
+import { GET_TODO } from "../../graphql/query";
 
 const Todo = ({ todo }: any) => {
-  const dispatch = useDispatch();
   const { id } = useParams();
-
-  useEffect(() => {
-    if (id) {
-      getTodoById(
-        parseInt(id)).then((response) => dispatch(
-          _todoAction(response))).catch((error) => error);
-    }
-  }, []);
+  const { loading, error, data } = useQuery(GET_TODO, {
+    variables: { id }
+  });
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+  // useEffect(() => {
+  //   if (id) {
+  //     getTodoById(
+  //       parseInt(id)).then((response) => dispatch(
+  //         _todoAction(response))).catch((error) => error);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -25,8 +30,8 @@ const Todo = ({ todo }: any) => {
         <div className="container px-4 mx-auto">
           <div className="text-center max-w-2xl mx-auto">
             <div className="row">
-              <p>{todo && todo.title}</p>
-              <p>{todo && todo.completed}</p>
+              <p>{data.todo && data.todo.title}</p>
+              <p>{data.todo && data.todo.completed}</p>
             </div>
           </div>
         </div>
