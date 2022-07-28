@@ -8,8 +8,8 @@ import {
 } from 'react-router-dom';
 import {
   ApolloClient,
-  InMemoryCache,
-  ApolloProvider
+  ApolloProvider,
+  InMemoryCache
 } from '@apollo/client';
 import './assets/styles/index.css';
 import reportWebVitals from './reportWebVitals';
@@ -23,17 +23,17 @@ import ForgotPassword from './pages/auth/Forgot-Password';
 import ResetPassword from './pages/auth/Reset-Password';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
-
-// components
-import Todos from './components/todos/Todos';
-import Todo from './components/todos/Todo';
-import Posts from './components/posts/Posts';
-import Post from './components/posts/Post';
+import Todos from './pages/Todos';
+import Todo from './pages/Todos/Todo';
+import Posts from './pages/Posts';
+import Post from './pages/Posts/Post';
+import Locations from './pages/Locations';
+import Location from './pages/Locations/Location';
 
 const client = new ApolloClient({
-  uri: '/',
-  cache: new InMemoryCache(),
-  connectToDevTools: true
+  uri: 'https://flyby-gateway.herokuapp.com/', // specifies the URL of our GraphQL server.
+  cache: new InMemoryCache(),                  // Apollo Client uses to cache query results after fetching them.
+  // connectToDevTools: true
 });
 
 const root = ReactDOM.createRoot(
@@ -56,6 +56,8 @@ root.render(
             <Route path="/todos/:id" element={<Todo />} />
             <Route path="/posts" element={<Posts />} />
             <Route path="/posts/:id" element={<Post />} />
+            <Route path="/locations" element={<Locations />} />
+            <Route path="/locations/:id" element={<Location />} />
           </Routes>
         </BrowserRouter>
       </ApolloProvider>

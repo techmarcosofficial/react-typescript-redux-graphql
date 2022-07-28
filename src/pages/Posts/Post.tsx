@@ -38,7 +38,7 @@ const Post = ({ post }: any) => {
 Post.propTypes = {
   loading: PropTypes.bool.isRequired,
   post: PropTypes.object,
-}
+};
 
 const mapStateToProps = (state: any) => ({
   // ... computed data from state and optionally ownProps
@@ -48,6 +48,6 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => {
   return {};
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

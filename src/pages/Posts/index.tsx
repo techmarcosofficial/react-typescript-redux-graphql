@@ -31,21 +31,19 @@ const Posts = (props: any) => {
 Posts.propTypes = {
   loading: PropTypes.bool.isRequired,
   posts: PropTypes.array,
-}
+};
 
 const mapStateToProps = (state: any) => ({
   // ... computed data from state and optionally ownProps
   loading: state.post.loading,
-  posts: state.post.posts,
-})
+  posts: state.post.posts
+});
 
 const mapDispatchToProps = (dispatch: any) => {
   getPosts().then((response) => {
     dispatch(postsAction(response));
   }).catch((error) => error);
-  return {
-
-  }
-}
+  return {};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

@@ -38,16 +38,16 @@ const Todo = ({ todo }: any) => {
 Todo.propTypes = {
   loading: PropTypes.bool.isRequired,
   todo: PropTypes.object,
-}
+};
 
 const mapStateToProps = (state: any) => ({
   // ... computed data from state and optionally ownProps
   loading: state.todo.loading,
-  todo: state.todo.todo,
+  todo: state.todo.todo
 });
 
 const mapDispatchToProps = (dispatch: any) => {
   return {};
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo);

@@ -28,17 +28,17 @@ const Todos = ({ todos }: any) => {
 Todos.propTypes = {
   loading: PropTypes.bool.isRequired,
   todos: PropTypes.array,
-}
+};
 
 const mapStateToProps = (state: any) => ({
   // ... computed data from state and optionally ownProps
   loading: state.todo.loading,
-  todos: state.todo.todos,
+  todos: state.todo.todos
 });
 
 const mapDispatchToProps = (dispatch: any) => {
   getTodos().then((response) => dispatch(todosAction(response))).catch((error) => error);
   return {};
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todos);
