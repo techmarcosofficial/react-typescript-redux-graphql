@@ -47,7 +47,6 @@ export const GET_POSTS = gql`
     posts {
       id
       title
-      body
     }
   }
 `;

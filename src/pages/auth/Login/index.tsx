@@ -1,9 +1,39 @@
 import React from "react";
 import { Formik } from "formik";
+import { 
+  useSelector, 
+  useDispatch
+} from 'react-redux';
 import Header from "../../../components/layout/Header/Header";
 import { LoginFormProps } from "../../../types";
+import { useMutation } from '@apollo/client';
+import { SIGN_IN } from "../../../graphql/mutation";
+import { loginAction } from "../../../redux/actions/authActions";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.auth.user);
+  const [login] = useMutation(SIGN_IN, {
+    onCompleted: (res): void => {
+      if (res.login.token) {
+        dispatch(loginAction(res.login));
+        const token = res.login.token;
+        delete res.login.token;
+        localStorage.setItem('user', JSON.stringify(res.login));
+        localStorage.setItem('accessToken', token);
+        window.location.href = '/';
+      } else {
+        alert("Invalid username or password");
+      }
+    },
+    onError: (err): void => {
+      console.log('login user error', err.message);
+    },
+  });
+  if (user) {
+    window.location.href = "/";
+    // return;
+  }
   return (
     <>
       <Header />
@@ -31,6 +61,7 @@ const Login = () => {
                 console.log('Form submitted!!!!!!!!!!!!!!!');
                 // API request
                 // ...
+                login({ variables: { email: values.email, password: values.password } });
                 setSubmitting(false);
               }}
             >

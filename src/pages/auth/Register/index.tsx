@@ -1,9 +1,27 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { Formik } from "formik";
 import Header from "../../../components/layout/Header/Header";
 import { RegisterFormProps } from "../../../types";
+import { useMutation } from '@apollo/client';
+import { SIGN_UP } from "../../../graphql/mutation";
 
 const Register = () => {
+  const user = useSelector((state: any) => state.auth.user);
+  const [signupUser] = useMutation(SIGN_UP, {
+    onCompleted: (res): void => {
+      if (res.signup) {
+        window.location.href = '/login';
+      }
+    },
+    onError: (err): void => {
+      console.log('create account error', err.message);
+    },
+  });
+  if (user) {
+    window.location.href = "/";
+    // return;
+  }
   return (
     <>
       <Header />
@@ -32,8 +50,22 @@ const Register = () => {
               }}
               onSubmit={(values, { setSubmitting }) => {
                 console.log('Form submitted!!!!!!!!!!!!!!!');
+                console.log({
+                  firstName: values.firstName,
+                  lastName: values.lastName,
+                  email: values.email,
+                  password: values.password,
+                });
                 // API request
                 // ...
+                signupUser({
+                  variables: {
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    email: values.email,
+                    password: values.password,
+                  }
+                });
                 setSubmitting(false);
               }}
             >
@@ -50,12 +82,12 @@ const Register = () => {
                 <form className="space-y-4 text-gray-700" onSubmit={handleSubmit}>
                   <div className="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
                     <div className="w-full px-2 md:w-1/2">
-                      <label className="block mb-1" htmlFor="firstName">First name</label>
+                      {/* <label className="block mb-1" htmlFor="firstName">First name</label> */}
                       <input
                         type="text"
                         name="firstName"
                         className="w-full h-12 px-4 mb-2 text-lg text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-                        placeholder="i.e XYZ"
+                        placeholder="First Name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.firstName}
@@ -63,12 +95,12 @@ const Register = () => {
                       {errors.firstName && touched.firstName && errors.firstName}
                     </div>
                     <div className="w-full px-2 md:w-1/2">
-                      <label className="block mb-1" htmlFor="lastName">Last name</label>
+                      {/* <label className="block mb-1" htmlFor="lastName">Last name</label> */}
                       <input
                         type="text"
                         name="lastName"
                         className="w-full h-12 px-4 mb-2 text-lg text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-                        placeholder="i.e XYZ"
+                        placeholder="Last Name"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.lastName}
@@ -77,12 +109,12 @@ const Register = () => {
                   </div>
                   <div className="flex flex-wrap">
                     <div className="w-full">
-                      <label className="block mb-1" htmlFor="email">Email</label>
+                      {/* <label className="block mb-1" htmlFor="email">Email</label> */}
                       <input
                         type="email"
                         name="email"
                         className="w-full h-12 px-4 mb-2 text-lg text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline" id="formGridCode_card"
-                        placeholder="i.e. xyz@gmail.com"
+                        placeholder="Email"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.email}  
@@ -92,7 +124,7 @@ const Register = () => {
                   </div>
                   <div className="flex flex-wrap">
                     <div className="w-full">
-                      <label className="block mb-1" htmlFor="password">Password</label>
+                      {/* <label className="block mb-1" htmlFor="password">Password</label> */}
                       <input
                         type="password"
                         name="password"

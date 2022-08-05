@@ -27,11 +27,13 @@ import Todos from './pages/Todos';
 import Todo from './pages/Todos/Todo';
 import Posts from './pages/Posts';
 import Post from './pages/Posts/Post';
+import AddPost from './pages/Posts/AddPost';
+import EditPost from './pages/Posts/EditPost';
 
-const client = new ApolloClient({ // 'https://flyby-gateway.herokuapp.com/',
-  uri: 'http://localhost:4000/',  // specifies the URL of our GraphQL server.
-  cache: new InMemoryCache(),     // Apollo Client uses to cache query results after fetching them.
-  // connectToDevTools: true
+const client = new ApolloClient({        // 'https://flyby-gateway.herokuapp.com/',
+  uri: process.env.REACT_APP_API_URL,    // specifies the URL of our GraphQL server.
+  cache: new InMemoryCache(),            // Apollo Client uses to cache query results after fetching them.
+  connectToDevTools: true
 });
 
 const root = ReactDOM.createRoot(
@@ -54,6 +56,8 @@ root.render(
             <Route path="/todos/:id" element={<Todo />} />
             <Route path="/posts" element={<Posts />} />
             <Route path="/posts/:id" element={<Post />} />
+            <Route path="/new-post" element={<AddPost />} />
+            <Route path="/posts/:id/edit" element={<EditPost />} />
           </Routes>
         </BrowserRouter>
       </ApolloProvider>
